@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patologie Rare e Anestesia</title>
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1c2321; --ink-soft:#4d5652; --line:#dedad0;
+  --brs:#7a2e2e; --brs-bg:#f3e6e4;
+  --lqt:#31447a; --lqt-bg:#e7eaf3;
+  --mh:#8a4b12; --mh-bg:#f5e8d8;
+  --por:#5b3a7a; --por-bg:#ece5f3;
+  --pch:#1f6b6b; --pch-bg:#e2f0ee;
+  --mg:#2f5d8a; --mg-bg:#e4edf5;
+  --ok:#2f6d3b; --ok-bg:#e7f0e6;
+  --caution:#a3641c; --caution-bg:#f6ecdd;
+  --avoid:#a5322c; --avoid-bg:#f7e7e5;
+  --radius:10px;
+  --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SF Mono", "Menlo", monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;padding-bottom:60px;}
+a{color:inherit;}
+header.top{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;}
+.top-inner{max-width:980px;margin:0 auto;padding:18px 20px 0 20px;}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--ink-soft);margin:0 0 4px 0;}
+h1.title{font-family:var(--serif);font-weight:600;font-size:clamp(22px,4.5vw,30px);margin:0 0 4px 0;letter-spacing:-.01em;}
+p.subtitle{margin:0 0 14px 0;color:var(--ink-soft);font-size:14.5px;max-width:640px;}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;}
+nav.tabs::-webkit-scrollbar{display:none;}
+nav.tabs button{flex:0 0 auto;background:none;border:none;border-bottom:3px solid transparent;padding:10px 12px 12px 12px;font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+nav.tabs button.active{color:var(--ink);border-bottom-color:var(--ink);}
+nav.tabs button:hover{color:var(--ink);}
+main{max-width:980px;margin:0 auto;padding:24px 20px 0 20px;}
+section.view{display:none;}
+section.view.active{display:block;}
+.section-head{margin-bottom:18px;}
+.section-head h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 6px 0;}
+.section-head p{margin:0;color:var(--ink-soft);font-size:14.5px;max-width:680px;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.drug-card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ink-soft);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;}
+.drug-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;}
+.drug-name{font-family:var(--serif);font-weight:600;font-size:17px;}
+.drug-tag{font-size:11.5px;color:var(--ink-soft);font-family:var(--mono);}
+.chev{font-size:13px;color:var(--ink-soft);transition:transform .15s ease;flex:0 0 auto;}
+.drug-card.open .chev{transform:rotate(90deg);}
+.drug-body{display:none;padding:0 16px 16px 16px;border-top:1px solid var(--line);}
+.drug-card.open .drug-body{display:block;padding-top:14px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media (max-width:560px){.grid2{grid-template-columns:1fr;}}
+.note{font-size:13.5px;color:var(--ink-soft);margin-top:8px;line-height:1.55;}
+.note strong{color:var(--ink);}
+.pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:20px;background:var(--ok-bg);color:var(--ok);margin-right:6px;margin-bottom:4px;}
+.pill.caution{background:var(--caution-bg);color:var(--caution);}
+.pill.avoid{background:var(--avoid-bg);color:var(--avoid);}
+.tbl-wrap{overflow-x:auto;margin-bottom:16px;border:1px solid var(--line);border-radius:var(--radius);}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px;}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+th{background:var(--bg);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft);font-weight:600;}
+tr:last-child td{border-bottom:none;}
+td.hi{font-weight:600;}
+.callout{border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-size:14px;line-height:1.55;}
+.callout.avoid{background:var(--avoid-bg);border:1px solid #e2b6b2;}
+.callout.avoid .lbl{color:var(--avoid);}
+.callout.info{background:var(--lqt-bg);border:1px solid #c3c9e2;}
+.callout.info .lbl{color:var(--lqt);}
+.callout.ok{background:var(--ok-bg);border:1px solid #bcd8bb;}
+.callout.ok .lbl{color:var(--ok);}
+.callout.brs{background:var(--brs-bg);border:1px solid #e3c6c2;}
+.callout.brs .lbl{color:var(--brs);}
+.callout.mh{background:var(--mh-bg);border:1px solid #e6c99e;}
+.callout.mh .lbl{color:var(--mh);}
+.callout.por{background:var(--por-bg);border:1px solid #d3c2e6;}
+.callout.por .lbl{color:var(--por);}
+.callout.pch{background:var(--pch-bg);border:1px solid #b9dcd6;}
+.callout.pch .lbl{color:var(--pch);}
+.callout.mg{background:var(--mg-bg);border:1px solid #bcd2e6;}
+.callout.mg .lbl{color:var(--mg);}
+.callout .lbl{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;font-weight:700;}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:20px;}
+.tool h3{font-family:var(--serif);font-size:17px;margin:0 0 12px 0;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12px;font-family:var(--mono);color:var(--ink-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:.03em;}
+select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-size:14.5px;color:var(--ink);font-family:var(--sans);appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234d5652' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 12px center;}
+.result{margin-top:14px;}
+.searchbar{width:100%;padding:11px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel);font-size:14.5px;margin-bottom:16px;}
+.searchbar:focus{outline:2px solid var(--lqt);outline-offset:-1px;}
+.hidden{display:none !important;}
+footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <p class="eyebrow">Riferimento clinico &mdash; Anestesia &amp; Terapia Intensiva</p>
+    <h1 class="title">Patologie Rare e Anestesia</h1>
+    <p class="subtitle">Gestione anestesiologica e farmacologica perioperatoria di canalopatie cardiache ereditarie e altre condizioni rare rilevanti per l'anestesista.</p>
+    <nav class="tabs" id="tabs">
+      <button data-view="home" class="active">Panoramica</button>
+      <button data-view="brs">Brugada</button>
+      <button data-view="lqt">QT lungo</button>
+      <button data-view="cpvt">CPVT</button>
+      <button data-view="arvc">ARVC/D</button>
+      <button data-view="sqt">QT corto</button>
+      <button data-view="por">Porfiria acuta</button>
+      <button data-view="pch">Pseudocolinesterasi</button>
+      <button data-view="compare">Brugada vs QT lungo</button>
+      <button data-view="refs">Bibliografia</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="view active" id="view-home">
+  <div class="section-head">
+    <h2>Nove condizioni, nessuna linea guida prospettica</h2>
+    <p>Per tutte le condizioni raccolte in questa app, tranne l'ipertermia maligna, non esistono linee guida randomizzate: le indicazioni derivano da case series, revisioni sistematiche di case report e opinione di esperti. Consultare sempre la scheda specifica prima di generalizzare da una condizione all'altra: alcuni farmaci (es. beta-bloccanti, succinilcolina) hanno indicazioni opposte a seconda della sindrome.</p>
+  </div>
+
+  <div class="callout avoid">
+    <span class="lbl">Uso clinico</span>
+    Strumento di consultazione rapida per uso professionale: non sostituisce il giudizio clinico, la consulenza specialistica (cardiologia/elettrofisiologia/neurologia a seconda del caso) n&eacute; i protocolli locali. Per farmaci non coperti in queste schede, verificare sempre una fonte aggiornata dedicata (es. database di farmaci per la porfiria).
+  </div>
+
+  <div class="section-head"><h2>Sintesi rapida per condizione</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Condizione</th><th>Rischio principale</th><th>Evitare soprattutto</th><th>Trattamento/misura chiave</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Brugada</td><td>Sopraslivellamento ST, FV, morte improvvisa</td><td>Antiaritmici IA/IC, tono vagale non bilanciato, febbre</td><td>Isoproterenolo per lo storm; trattare la febbre aggressivamente</td></tr>
+        <tr><td class="hi">QT lungo</td><td>Torsione di punta</td><td>Farmaci QT-prolungatori, ipopotassiemia, bradicardia non attesa</td><td>Magnesio solfato EV; proseguire il beta-bloccante</td></tr>
+        <tr><td class="hi">CPVT</td><td>TV bidirezionale/polimorfa da stress catecolaminergico</td><td>Catecolamine, ketamina, ansia/dolore non controllati</td><td>Beta-blocco continuo; sedazione/analgesia profonda</td></tr>
+        <tr><td class="hi">ARVC/D</td><td>TV da cicatrice fibro-adiposa del ventricolo destro</td><td>Alotano (storico), pancuronio, ipossia/ipercapnia</td><td>Proseguire beta-bloccante; evitare stress sul VD</td></tr>
+        <tr><td class="hi">QT corto</td><td>FA/FV (letteratura anestesiologica quasi assente)</td><td>Ipercalcemia, iperpotassiemia, farmaci che accorciano il QT</td><td>Proseguire chinidina se in terapia; defibrillatore disponibile</td></tr>
+        <tr><td class="hi">Porfiria acuta</td><td>Crisi neuroviscerale acuta</td><td>Barbiturici, etomidate; molti anticonvulsivanti</td><td>Glucosio EV, evitare digiuno prolungato; eme-arginato se crisi</td></tr>
+        <tr><td class="hi">Deficit di pseudocolinesterasi</td><td>Blocco neuromuscolare prolungato</td><td>Succinilcolina, mivacurium</td><td>Sedazione e ventilazione fino a recupero spontaneo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ BRUGADA ============ -->
+<section class="view" id="view-brs">
+  <div class="section-head">
+    <h2>Sindrome di Brugada</h2>
+    <p>Canalopatia del sodio (spesso SCN5A) associata a morte improvvisa in soggetti giovani, spesso senza cardiopatia strutturale. Il rischio aritmico &egrave; massimo con febbre, tono vagale elevato e farmaci bloccanti il canale del sodio.</p>
+  </div>
+  <div class="callout brs">
+    <span class="lbl">Regola pratica</span>
+    Evitare febbre (trattarla aggressivamente), evitare stimoli vagali eccessivi (neostigmina non bilanciata), preferire lidocaina/ropivacaina a bupivacaina, tenere pronto isoproterenolo per un eventuale storm aritmico.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Anamnesi di sincope, storia familiare di morte improvvisa giovanile; verificare presenza di ICD; ECG a 12 derivazioni (pattern tipo 1 spontaneo &egrave; il pi&ugrave; specifico); correggere febbre/infezione prima di procedure elettive; proseguire chinidina o cilostazolo se gi&agrave; in terapia cronica.</p></div>
+  <div class="section-head"><h2>Farmaci: cosa evitare</h2></div>
+  <div id="brs-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri o preferibili</h2></div>
+  <div id="brs-safe-list"></div>
+  <div class="section-head"><h2>Gestione dello storm aritmico</h2></div>
+  <div class="callout brs">
+    <span class="lbl">Prima linea</span>
+    <strong>Isoproterenolo in infusione</strong>: normalizza acutamente il pattern ECG. In alternativa/aggiunta: <strong>chinidina</strong> orale, <strong>cilostazolo</strong>. Defibrillazione per FV sostenuta. Evitare antiaritmici di classe IA/IC.
+  </div>
+</section>
+
+<!-- ============ LQT ============ -->
+<section class="view" id="view-lqt">
+  <div class="section-head">
+    <h2>Sindrome del QT lungo</h2>
+    <p>Disturbo della ripolarizzazione ventricolare (LQT1/KCNQ1, LQT2/KCNH2, LQT3/SCN5A e altre) che predispone a torsione di punta. Il rischio &egrave; massimo con stimolo simpatico (LQT1, LQT2), bradicardia (LQT3), ipopotassiemia/ipomagnesiemia e farmaci QT-prolungatori.</p>
+  </div>
+  <div class="callout info">
+    <span class="lbl">Regola pratica</span>
+    Proseguire sempre il beta-bloccante; correggere K&#8314; e Mg&#8322;&#8314; ai valori medio-alti della norma; evitare farmaci QT-prolungatori; garantire profondit&agrave; anestesiologica adeguata prima di stimoli intensi; magnesio solfato pronto per la torsione di punta.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Genotipo se noto (LQT1: sforzo/nuoto; LQT2: stimoli uditivi/emotivi; LQT3: a riposo/nel sonno, bradicardia-dipendente); ECG con QTc basale; elettroliti da correggere; <strong>non sospendere il beta-bloccante</strong>; non iniziarlo solo per l'intervento se non gi&agrave; in terapia (rischio di bradicardia eccessiva, specie LQT3).</p></div>
+  <div class="section-head"><h2>Farmaci: cosa evitare</h2></div>
+  <div id="lqt-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri o preferibili</h2></div>
+  <div id="lqt-safe-list"></div>
+  <div class="section-head"><h2>Gestione della torsione di punta</h2></div>
+  <div class="callout info">
+    <span class="lbl">Prima linea</span>
+    <strong>Solfato di magnesio 1&ndash;2 g EV in bolo</strong> (anche con magnesiemia normale). Potassio al limite medio-alto (4,5&ndash;5 mEq/L). Se bradicardia/pausa-dipendente (LQT3): <strong>isoproterenolo</strong> o pacing overdrive. Evitare ulteriori antiaritmici QT-prolungatori (amiodarone, procainamide) per il trattamento specifico; la <strong>lidocaina</strong> pu&ograve; essere un'opzione aggiuntiva.
+  </div>
+</section>
+
+<!-- ============ CPVT ============ -->
+<section class="view" id="view-cpvt">
+  <div class="section-head">
+    <h2>Tachicardia ventricolare polimorfa catecolaminergica (CPVT)</h2>
+    <p>Canalopatia del calcio (RYR2 dominante o CASQ2 recessiva) con ECG a riposo e cuore strutturalmente normali. Le aritmie (tipicamente TV bidirezionale o polimorfa) sono scatenate specificamente dallo <strong>stress catecolaminergico</strong>, non dalla febbre n&eacute; dal QT.</p>
+  </div>
+  <div class="callout brs">
+    <span class="lbl">Regola pratica</span>
+    Proseguire sempre il beta-bloccante (cardine della terapia, es. nadololo); garantire analgesia e sedazione profonde per abolire la scarica simpatica da dolore/ansia; evitare catecolamine esogene incluso l'isoproterenolo (qui &egrave; controindicato, a differenza del Brugada).
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Verificare terapia in atto (beta-bloccante, talvolta flecainide aggiunta &mdash; qui usata come trattamento, non come farmaco da evitare); presenza di ICD; pianificare copertura analgesica anticipata per evitare picchi di dolore incontrollato in risveglio.</p></div>
+  <div class="section-head"><h2>Farmaci: cosa evitare</h2></div>
+  <div id="cpvt-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri o preferibili</h2></div>
+  <div id="cpvt-safe-list"></div>
+  <div class="section-head"><h2>Gestione dello storm aritmico</h2></div>
+  <div class="callout brs">
+    <span class="lbl">Prima linea</span>
+    <strong>Beta-bloccante EV</strong> (propranololo o esmololo) &egrave; il trattamento di prima linea per la TV da CPVT, non la cardioversione isolata. In rianimazione, l'adrenalina standard ACLS pu&ograve; teoricamente perpetuare l'aritmia: alcuni esperti suggeriscono cautela, senza per questo modificare gli algoritmi di base in arresto cardiaco conclamato. La flecainide EV pu&ograve; essere considerata nello storm refrattario su indicazione specialistica.
+  </div>
+</section>
+
+<!-- ============ ARVC ============ -->
+<section class="view" id="view-arvc">
+  <div class="section-head">
+    <h2>Cardiomiopatia/displasia aritmogena del ventricolo destro (ARVC/D)</h2>
+    <p>Sostituzione fibro-adiposa progressiva del miocardio (soprattutto ventricolo destro) su base desmosomiale, con rischio di tachicardia ventricolare e, nelle fasi avanzate, disfunzione bi-ventricolare/scompenso.</p>
+  </div>
+  <div class="callout brs">
+    <span class="lbl">Regola pratica</span>
+    Proseguire il beta-bloccante; evitare ipossia, ipercapnia e acidosi (peggiorano la funzione del VD e l'aritmogenicit&agrave;); evitare stimolazione beta-adrenergica; l'alotano (ormai storico) e il pancuronio sono descritti come controindicati.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Valutazione ecocardiografica della funzione del ventricolo destro (e sinistro nelle forme avanzate); interrogazione ICD se presente; evitare sovraccarico di volume che stressi ulteriormente il VD; proseguire la terapia beta-bloccante di base.</p></div>
+  <div class="section-head"><h2>Farmaci/misure: cosa evitare</h2></div>
+  <div id="arvc-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri o preferibili</h2></div>
+  <div id="arvc-safe-list"></div>
+</section>
+
+<!-- ============ SQT ============ -->
+<section class="view" id="view-sqt">
+  <div class="section-head">
+    <h2>Sindrome del QT corto</h2>
+    <p>Canalopatia da guadagno di funzione dei canali del potassio (KCNH2/SQT1 la pi&ugrave; comune), con QTc molto breve (&lt;340ms, o &le;360ms in presenza di altri fattori di rischio) e rischio di fibrillazione atriale/ventricolare. Condizione estremamente rara (poche centinaia di casi descritti al mondo).</p>
+  </div>
+  <div class="callout avoid">
+    <span class="lbl">Evidenza quasi assente</span>
+    Non esistono case series o raccomandazioni specifiche sulla gestione anestesiologica di questa sindrome: la ricerca in letteratura non ha prodotto risultati dedicati. Le indicazioni seguenti sono estrapolazioni prudenziali dai principi generali delle canalopatie, non evidenza diretta. Richiedere sempre consulenza elettrofisiologica dedicata prima di procedure elettive.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Proseguire chinidina/idrochinidina se gi&agrave; in terapia (usata specificamente per allungare il QT in questa sindrome); verificare presenza di ICD; ECG basale; defibrillatore esterno disponibile come per le altre canalopatie.</p></div>
+  <div class="section-head"><h2>Misure prudenziali (estrapolate, non specifiche)</h2></div>
+  <div class="card">
+    <p class="note" style="margin-top:0;"><strong>Evitare:</strong> ipercalcemia, iperpotassiemia e acidosi (possono ulteriormente accorciare la ripolarizzazione); farmaci che agiscono da attivatori dei canali del potassio senza chiara indicazione.</p>
+    <p class="note"><strong>Presumibilmente sicuri:</strong> non sono descritti farmaci anestetici specificamente controindicati; adottare una tecnica anestesiologica standard con monitoraggio ECG continuo e defibrillatore pronto, come per qualunque canalopatia aritmogena.</p>
+  </div>
+</section>
+
+
+<!-- ============ PORFIRIA ============ -->
+<section class="view" id="view-por">
+  <div class="section-head">
+    <h2>Porfiria epatica acuta (Porfiria Acuta Intermittente e affini)</h2>
+    <p>Difetto della via biosintetica dell'eme che porta ad accumulo di precursori porfirinici (ALA, PBG) e crisi neuroviscerali acute (dolore addominale, neuropatia, sintomi psichiatrici, instabilit&agrave; autonomica), scatenate da farmaci porfirinogeni, digiuno, stress, infezioni, variazioni ormonali.</p>
+  </div>
+  <div class="callout por">
+    <span class="lbl">Regola pratica</span>
+    Evitare barbiturici ed etomidate; il <strong>propofol &egrave; il farmaco di induzione di scelta</strong> (ampiamente documentato come sicuro); evitare il digiuno prolungato (il glucosio sopprime l'ALA sintetasi); la chirurgia, anche maggiore, pu&ograve; essere condotta in sicurezza in un paziente con diagnosi nota e farmaci correttamente selezionati &mdash; il rischio reale &egrave; nei casi non diagnosticati.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Evitare digiuno prolungato: infusione di glucosio EV (destrosio 10%) a partire dal preoperatorio nei casi a rischio; garantire analgesia adeguata e trattamento tempestivo di eventuali infezioni (fattori scatenanti); rivedere l'intera terapia domiciliare rispetto a un database aggiornato dei farmaci in porfiria (es. www.drugs-porphyria.org) per qualunque farmaco non elencato in questa scheda &mdash; l'elenco completo dei farmaci classificati &egrave; troppo esteso per essere riportato integralmente.</p></div>
+  <div class="section-head"><h2>Farmaci porfirinogeni: da evitare</h2></div>
+  <div id="por-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri</h2></div>
+  <div id="por-safe-list"></div>
+  <div class="section-head"><h2>Gestione della crisi acuta</h2></div>
+  <div class="callout por">
+    <span class="lbl">Prima linea</span>
+    <strong>Eme-arginato (hematin) EV</strong>: trattamento specifico, sopprime l'ALA sintetasi. In alternativa o come misura aggiuntiva nei casi lievi: <strong>glucosio EV ad alte dosi</strong> (destrosio 10%). Analgesia con oppioidi (sicuri); correggere l'iponatriemia se presente; per le convulsioni evitare fenitoina e barbiturici, preferendo magnesio solfato o levetiracetam/gabapentin come alternative pi&ugrave; sicure.
+  </div>
+</section>
+
+<!-- ============ PSEUDOCOLINESTERASI ============ -->
+<section class="view" id="view-pch">
+  <div class="section-head">
+    <h2>Deficit di pseudocolinesterasi (butirrilcolinesterasi)</h2>
+    <p>Variante genetica del gene BCHE che riduce o abolisce l'attivit&agrave; della colinesterasi plasmatica, responsabile dell'idrolisi di succinilcolina e mivacurium: la conseguenza clinica &egrave; un blocco neuromuscolare marcatamente prolungato (da alcune ore fino a diverse ore nelle forme omozigoti).</p>
+  </div>
+  <div class="callout pch">
+    <span class="lbl">Regola pratica</span>
+    Se il deficit &egrave; noto, evitare succinilcolina e mivacurium a priori. Se il blocco prolungato si manifesta inaspettatamente, la gestione &egrave; di semplice <strong>supporto</strong> (sedazione e ventilazione fino al recupero spontaneo): non somministrare neostigmina nel tentativo di accelerare il recupero.
+  </div>
+  <div class="section-head" style="margin-top:6px;"><h2>Classificazione (numero di dibucaina)</h2></div>
+  <div class="tbl-wrap">
+    <table><tbody>
+      <tr><td class="hi">Normale</td><td>Numero di dibucaina &sim;80</td><td>Durata d'azione normale della succinilcolina (pochi minuti)</td></tr>
+      <tr><td class="hi">Eterozigote atipico</td><td>&sim;50&ndash;60</td><td>Prolungamento da lieve a moderato (20&ndash;30 minuti)</td></tr>
+      <tr><td class="hi">Omozigote atipico</td><td>&sim;20</td><td>Prolungamento marcato (diverse ore)</td></tr>
+      <tr><td class="hi">Deficit acquisito/relativo</td><td>Variabile</td><td>Epatopatia, gravidanza, malnutrizione, farmaci (neostigmina, organofosfati, alcuni chemioterapici)</td></tr>
+    </tbody></table>
+  </div>
+  <div class="section-head"><h2>Farmaci coinvolti</h2></div>
+  <div id="pch-drug-list"></div>
+  <div class="section-head"><h2>Gestione del blocco prolungato inatteso</h2></div>
+  <div class="card">
+    <p class="note" style="margin-top:0;">Mantenere sedazione e ventilazione meccanica fino al recupero spontaneo della funzione neuromuscolare (pu&ograve; richiedere da 1 a oltre 8 ore in base alla gravit&agrave;); confermare il recupero completo con un monitor di trasmissione neuromuscolare (train-of-four) prima dell'estubazione; <strong>non</strong> somministrare ulteriore neostigmina sperando di accelerare il recupero &mdash; non &egrave; efficace su questo tipo di blocco e pu&ograve; essere controproducente. Dopo l'evento: test del numero di dibucaina per confermare e classificare il deficit, screening familiare (trasmissione recessiva/codominante), documentazione permanente in cartella per future anestesie.</p>
+  </div>
+</section>
+
+
+<!-- ============ COMPARE (Brugada vs QT lungo) ============ -->
+<section class="view" id="view-compare">
+  <div class="section-head">
+    <h2>Confronto diretto: Brugada vs QT lungo</h2>
+    <p>Sono le due condizioni pi&ugrave; frequentemente confrontate perch&eacute; condividono molti farmaci dell'anestesia quotidiana, ma con classificazioni spesso opposte.</p>
+  </div>
+  <input class="searchbar" id="search-compare" placeholder="Cerca un farmaco...">
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Farmaco</th><th>Brugada</th><th>QT lungo</th></tr></thead>
+      <tbody id="compare-table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ REFS ============ -->
+<section class="view" id="view-refs">
+  <div class="section-head">
+    <h2>Bibliografia principale</h2>
+  </div>
+  <div class="tbl-wrap">
+    <table><tbody>
+      <tr><td><strong>Brugada e QT lungo:</strong> Staikou C, Chondrogiannis K, Mani A. Perioperative management of hereditary arrhythmogenic syndromes. Br J Anaesth. 2012;108:730-744.</td></tr>
+      <tr><td>Edge CJ, et al. Anaesthesia for patients with hereditary arrhythmias part I: Brugada syndrome. BJA Education. 2018.</td></tr>
+      <tr><td>Anesthesiological management of Brugada syndrome patients: a systematic review. PMC. 2023.</td></tr>
+      <tr><td>Domingues L, et al. Brugada Syndrome: Anesthetic Implications in an Incidentally Diagnosed Patient. PMC. 2024.</td></tr>
+      <tr><td>Aziz M, et al. Perioperative management of patients with congenital or acquired disorders of the QT interval. Br J Anaesth. 2018;120:465-478.</td></tr>
+      <tr><td>Lucile Packard Children's Hospital, Stanford. Guideline: peri-operative management of patients with congenital long QT syndrome.</td></tr>
+      <tr><td>Al-Refai A, et al. Anesthesia for patients with congenital long QT syndrome. Anesthesiology. 2005;102:204-210.</td></tr>
+      <tr><td><strong>CPVT e ARVC/D:</strong> Staikou C, et al., Br J Anaesth 2012 (v. sopra) &mdash; sezioni dedicate a CPVT e ARVC/D.</td></tr>
+      <tr><td><strong>Porfiria:</strong> Making safe medicine choices during general anaesthesia and surgery in acute porphyria. Welsh Medicines Information Centre. Aggiornato agosto 2024.</td></tr>
+      <tr><td>Porphyrias. Br J Anaesth (review). James MF, Hift RJ.</td></tr>
+      <tr><td><strong>Deficit di pseudocolinesterasi:</strong> nozioni consolidate di farmacologia anestesiologica e testi di riferimento (Miller's Anesthesia; Barash Clinical Anesthesia).</td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>App di riferimento clinico &mdash; uso professionale. Verificare sempre con lo specialista di riferimento (cardiologia/elettrofisiologia/neurologia) prima di applicare le indicazioni a un caso specifico.</div>
+</footer>
+
+<script>
+const BRS_AVOID = [
+  {name:"Antiaritmici classe IA/IC", tag:"ajmalina, flecainide, propafenone, procainamide, disopiramide", desc:"Bloccano ulteriormente il canale del sodio: sono i farmaci del test di provocazione diagnostico. Assolutamente da evitare fuori da contesto diagnostico controllato."},
+  {name:"Bupivacaina (dosi sistemiche elevate)", tag:"anestetico locale amidico a lunga durata", desc:"Blocco del canale del sodio pi&ugrave; potente e prolungato rispetto a lidocaina/ropivacaina."},
+  {name:"Farmaci colinergici / stimolo vagale non bilanciato", tag:"neostigmina non associata ad anticolinergico", desc:"Il tono vagale accentua il sopraslivellamento ST. Se necessaria, associare sempre glicopirrolato/atropina, oppure preferire sugammadex."},
+  {name:"Beta-bloccanti (uso routinario perioperatorio)", tag:"non specifici per il trattamento dello storm", desc:"Il tono vagale relativo indotto pu&ograve; smascherare/accentuare il pattern ECG."},
+  {name:"Alfa-agonisti puri", tag:"clonidina; cautela con dexmedetomidina", desc:"Meccanismo teoricamente sfavorevole (bradicardia, tono vagale)."},
+  {name:"Noradrenalina in infusione isolata", tag:"vasopressore", desc:"Riportato aumento del sopraslivellamento ST. Preferire efedrina o fenilefrina."},
+  {name:"Ipertermia", tag:"febbre, fattore critico", desc:"Tra i pi&ugrave; potenti fattori scatenanti: trattare aggressivamente."}
+];
+const BRS_SAFE = [
+  {name:"Propofol (bolo di induzione)", tag:"ampiamente riportato sicuro", desc:"Pratica pi&ugrave; comune e sicura. Cautela teorica per infusioni molto prolungate ad alte dosi."},
+  {name:"Midazolam / benzodiazepine", tag:"tra i pi&ugrave; sicuri", desc:"Alcune revisioni le indicano come ancora pi&ugrave; sicure del propofol."},
+  {name:"Sevoflurano, isoflurano, desflurano", tag:"alogenati", desc:"Nessun effetto significativo riportato sull'ECG."},
+  {name:"Oppioidi", tag:"fentanyl, sufentanil, remifentanil, morfina, tramadolo", desc:"Utilizzati diffusamente senza eventi avversi riportati."},
+  {name:"Curari non depolarizzanti", tag:"rocuronio, vecuronio, atracurio, cisatracurio", desc:"Nessuna controindicazione riportata."},
+  {name:"Lidocaina / Ropivacaina", tag:"anestetici locali", desc:"Preferibili a bupivacaina per il blocco del sodio meno potente/prolungato."},
+  {name:"Sugammadex", tag:"reversal", desc:"Evita lo stimolo colinergico associato alla neostigmina."},
+  {name:"Isoproterenolo", tag:"farmaco di salvataggio", desc:"Trattamento cardine per lo storm aritmico."}
+];
+
+const LQT_AVOID = [
+  {name:"Succinilcolina", tag:"depolarizzante", desc:"Le fascicolazioni inducono una scarica simpatica. Preferire un curaro non depolarizzante."},
+  {name:"Ketamina", tag:"induzione/analgesia", desc:"Effetto simpaticomimetico diretto: evitare relativamente, soprattutto in bolo IV."},
+  {name:"Droperidolo", tag:"antiemetico/neurolettico", desc:"Boxed warning per prolungamento del QT."},
+  {name:"Ondansetron ad alte dosi", tag:"antiemetico", desc:"Prolungamento QT dose-dipendente documentato. Dose minima efficace con monitoraggio ECG."},
+  {name:"Metadone", tag:"oppioide", desc:"Robusto legame al prolungamento del QT: evitare se possibile."},
+  {name:"Sevoflurano (mantenimento prolungato)", tag:"alogenato", desc:"L'effetto QT-prolungante pi&ugrave; marcato tra gli alogenati."},
+  {name:"Pancuronio", tag:"curaro vagolitico", desc:"Effetto vagolitico/tachicardizzante sconsigliato."},
+  {name:"Neostigmina isolata", tag:"senza copertura anticolinergica adeguata", desc:"La bradicardia indotta pu&ograve; prolungare il QT, specie in LQT3."},
+  {name:"Ipopotassiemia / ipomagnesiemia / ipotermia", tag:"condizioni da prevenire", desc:"Tra i pi&ugrave; potenti facilitatori della torsione di punta."}
+];
+const LQT_SAFE = [
+  {name:"Propofol", tag:"induzione e TIVA", desc:"Farmaco pi&ugrave; frequentemente riportato come sicuro."},
+  {name:"Isoflurano", tag:"alogenato, se necessario", desc:"Effetto QT-prolungante minore rispetto al sevoflurano."},
+  {name:"Fentanyl, sufentanil, remifentanil", tag:"oppioidi", desc:"Da preferire a metadone."},
+  {name:"Rocuronio, vecuronio, cisatracurio", tag:"curari non depolarizzanti", desc:"Sicuri; evitare succinilcolina e pancuronio."},
+  {name:"Sugammadex", tag:"reversal", desc:"Evita la bradicardia associata alla neostigmina."},
+  {name:"Anestetici locali (dosi standard)", tag:"lidocaina, ropivacaina, bupivacaina", desc:"Nessun effetto QT rilevante alle dosi abituali."},
+  {name:"Beta-bloccanti (terapia cronica)", tag:"non sospendere", desc:"Va sempre proseguita in perioperatorio."},
+  {name:"Magnesio solfato", tag:"profilassi/trattamento", desc:"Prima linea per la torsione di punta conclamata."}
+];
+
+const CPVT_AVOID = [
+  {name:"Isoproterenolo e altre catecolamine esogene", tag:"a differenza del Brugada, qui sono controindicate", desc:"Scatenano direttamente l'aritmia catecolamino-dipendente."},
+  {name:"Ketamina", tag:"induzione/analgesia", desc:"Effetto simpaticomimetico diretto: da evitare."},
+  {name:"Pancuronio", tag:"curaro vagolitico", desc:"L'aumento di frequenza cardiaca e la scarica simpatica associata sono sfavorevoli."},
+  {name:"Anestesia/analgesia superficiale", tag:"non un farmaco, ma una condizione da evitare", desc:"Il dolore e l'ansia non controllati sono uno scatenante diretto: garantire sempre profondit&agrave; adeguata."},
+  {name:"Sospensione del beta-bloccante", tag:"terapia cronica", desc:"Non interrompere mai il beta-blocco perioperatorio."}
+];
+const CPVT_SAFE = [
+  {name:"Propofol", tag:"induzione/mantenimento", desc:"Considerato probabilmente sicuro nelle casistiche disponibili."},
+  {name:"Remifentanil", tag:"oppioide", desc:"Considerato probabilmente sicuro; utile per smorzare la risposta simpatica alla laringoscopia."},
+  {name:"Beta-bloccanti", tag:"terapia cronica da proseguire", desc:"Cardine della terapia; mai sospendere in perioperatorio."},
+  {name:"Anestesia loco-regionale senza adrenalina", tag:"tecnica preferita", desc:"Relativamente sicura; evitare adrenalina in dosi elevate nel LA."},
+  {name:"Flecainide", tag:"qui &egrave; un farmaco terapeutico, non da evitare", desc:"Usata come trattamento aggiuntivo nella CPVT refrattaria: da non confondere con il suo ruolo opposto nel Brugada."}
+];
+
+const ARVC_AVOID = [
+  {name:"Alotano", tag:"storico, ormai fuori uso", desc:"Descritto come controindicato in letteratura storica sull'ARVC/D."},
+  {name:"Pancuronio", tag:"curaro vagolitico", desc:"Effetto tachicardizzante sfavorevole; evitare."},
+  {name:"Beta-agonisti / catecolamine", tag:"stimolazione beta-adrenergica", desc:"Possono scatenare la tachicardia ventricolare tipica di questa cardiomiopatia."},
+  {name:"Ipossia, ipercapnia, acidosi", tag:"condizioni da evitare, non farmaci", desc:"Peggiorano la funzione del ventricolo destro e l'aritmogenicit&agrave;: mantenere ventilazione ed emodinamica ottimali."},
+  {name:"Anestetici locali/adrenalina ad alte dosi nei blocchi centrali", tag:"cautela dosimetrica", desc:"Riportata cautela su dosi elevate di LA e adrenalina in tecniche neuroassiali."}
+];
+const ARVC_SAFE = [
+  {name:"Beta-bloccanti", tag:"terapia cronica da proseguire", desc:"Trattamento di base delle aritmie ventricolari in questa cardiomiopatia."},
+  {name:"Anestesia loco-regionale senza adrenalina", tag:"tecnica relativamente sicura", desc:"Preferibile quando applicabile."},
+  {name:"Propofol e oppioidi standard", tag:"tecnica anestesiologica generale abituale", desc:"Nessuna controindicazione specifica riportata, a differenza di alotano/pancuronio."}
+];
+
+
+const POR_AVOID = [
+  {name:"Barbiturici", tag:"tiopentale e altri", desc:"Classico induttore di ALA sintetasi: controindicazione storica assoluta."},
+  {name:"Etomidate", tag:"induzione", desc:"Potenzialmente porfirinogeno nei modelli animali; almeno una crisi descritta dopo il suo uso: considerarlo non sicuro."},
+  {name:"Diazepam", tag:"benzodiazepina", desc:"Classificato come non sicuro in diverse liste di riferimento (a differenza di midazolam, generalmente meglio tollerato)."},
+  {name:"Fenitoina e fenobarbital", tag:"anticonvulsivanti", desc:"Porfirinogeni: evitare per il controllo delle convulsioni in questi pazienti."},
+  {name:"Ketamina", tag:"uso non di prima scelta", desc:"Dati contrastanti: probabilmente relativamente sicura, ma alcuni riportano aumento dei precursori porfirinici; riservarla a situazioni senza alternativa."},
+  {name:"Digiuno prolungato", tag:"non un farmaco, ma un fattore scatenante", desc:"Il digiuno induce l'ALA sintetasi: mantenere un adeguato apporto di glucosio in tutto il perioperatorio."}
+];
+const POR_SAFE = [
+  {name:"Propofol", tag:"induzione di scelta", desc:"Ampiamente documentato come sicuro, anche in gravidanza."},
+  {name:"Oppioidi", tag:"fentanyl, morfina, alfentanil, ossicodone", desc:"Considerati sicuri."},
+  {name:"Anestetici locali", tag:"bupivacaina, levobupivacaina, lidocaina (cautela a dosi EV elevate), ropivacaina, mepivacaina", desc:"Considerati sicuri alle dosi anestesiologiche abituali."},
+  {name:"Alogenati e N2O", tag:"desflurano, isoflurano, sevoflurano, N2O", desc:"Considerati sicuri (l'alotano invece va evitato)."},
+  {name:"Curari", tag:"tutti i principali agenti, inclusa succinilcolina", desc:"Nessuna specifica controindicazione riportata per i bloccanti neuromuscolari in questa condizione."},
+  {name:"Glucosio EV", tag:"misura protettiva, non solo farmaco", desc:"Sopprime l'ALA sintetasi: mantenere un apporto costante di carboidrati in tutto il perioperatorio."}
+];
+
+const PCH_DRUGS = [
+  {name:"Succinilcolina", tag:"depolarizzante, metabolizzata dalla colinesterasi plasmatica", desc:"Blocco marcatamente prolungato in caso di deficit; evitare se il deficit &egrave; noto in anticipo."},
+  {name:"Mivacurium", tag:"non depolarizzante, ma a metabolismo esterasico plasmatico", desc:"Stesso meccanismo della succinilcolina: blocco prolungato in caso di deficit."},
+  {name:"Anestetici locali esterei", tag:"procaina, cloroprocaina, tetracaina, cocaina", desc:"Metabolizzati anch'essi dalla colinesterasi plasmatica: effetto prolungato/rischio di tossicit&agrave; teoricamente aumentato nei deficit severi, clinicamente meno rilevante rispetto ai curari."},
+  {name:"Remifentanil", tag:"NON coinvolto, nonostante la confusione frequente", desc:"Metabolizzato da esterasi plasmatiche e tissutali aspecifiche, non dalla butirrilcolinesterasi: pu&ograve; essere usato normalmente."},
+  {name:"Anestetici locali amidici", tag:"lidocaina, bupivacaina, ropivacaina", desc:"Metabolismo epatico, non coinvolti: nessuna restrizione."},
+  {name:"Rocuronio, vecuronio, cisatracurio, atracurio", tag:"curari non depolarizzanti a metabolismo indipendente dalla colinesterasi plasmatica", desc:"Alternativa sicura alla succinilcolina/mivacurium in caso di deficit noto."}
+];
+
+
+const COMPARE = [
+  {drug:"Propofol (bolo induzione)", brs:{s:"ok",n:"Sicuro, uso comune"}, lqt:{s:"ok",n:"Farmaco preferito"}},
+  {drug:"Propofol (infusione prolungata alte dosi)", brs:{s:"caution",n:"Cautela teorica, dati limitati"}, lqt:{s:"ok",n:"TIVA spesso preferita"}},
+  {drug:"Midazolam", brs:{s:"ok",n:"Tra i pi&ugrave; sicuri"}, lqt:{s:"ok",n:"Sicuro"}},
+  {drug:"Ketamina", brs:{s:"caution",n:"Dati limitati, non controindicata in modo assoluto"}, lqt:{s:"avoid",n:"Effetto simpaticomimetico: evitare se possibile"}},
+  {drug:"Sevoflurano", brs:{s:"ok",n:"Nessun effetto ECG riportato"}, lqt:{s:"caution",n:"Il pi&ugrave; QT-prolungante tra gli alogenati: limitare"}},
+  {drug:"Isoflurano", brs:{s:"ok",n:"Sicuro"}, lqt:{s:"ok",n:"Alogenato preferibile se necessario"}},
+  {drug:"Desflurano", brs:{s:"ok",n:"Sicuro"}, lqt:{s:"caution",n:"Dati limitati, cautela come per gli altri alogenati"}},
+  {drug:"Fentanyl/Sufentanil/Remifentanil", brs:{s:"ok",n:"Sicuri"}, lqt:{s:"ok",n:"Preferiti a metadone"}},
+  {drug:"Metadone", brs:{s:"caution",n:"Non specificamente controindicato, dati scarsi"}, lqt:{s:"avoid",n:"Robusto prolungamento del QT: evitare"}},
+  {drug:"Succinilcolina", brs:{s:"caution",n:"Uso controverso per l'effetto vagale/K&#8314;: preferire alternativa"}, lqt:{s:"avoid",n:"Fascicolazioni &rarr; scarica simpatica: evitare"}},
+  {drug:"Rocuronio/Vecuronio/Cisatracurio", brs:{s:"ok",n:"Sicuri"}, lqt:{s:"ok",n:"Sicuri"}},
+  {drug:"Pancuronio", brs:{s:"caution",n:"Non il curaro di scelta, dati limitati"}, lqt:{s:"avoid",n:"Vagolitico/tachicardizzante: evitare"}},
+  {drug:"Neostigmina (senza copertura adeguata)", brs:{s:"avoid",n:"Stimolo vagale: evitare o associare sempre anticolinergico"}, lqt:{s:"avoid",n:"Bradicardia pu&ograve; prolungare il QT: associare sempre anticolinergico"}},
+  {drug:"Sugammadex", brs:{s:"ok",n:"Reversal preferibile"}, lqt:{s:"ok",n:"Reversal preferibile"}},
+  {drug:"Lidocaina", brs:{s:"ok",n:"Anestetico locale preferito"}, lqt:{s:"ok",n:"Sicuro, utile anche come antiaritmico"}},
+  {drug:"Ropivacaina", brs:{s:"ok",n:"Preferibile a bupivacaina"}, lqt:{s:"ok",n:"Sicura a dosi standard"}},
+  {drug:"Bupivacaina (dosi sistemiche elevate)", brs:{s:"avoid",n:"Blocco Na&#8314; potente e prolungato: evitare/limitare"}, lqt:{s:"caution",n:"Sicura a dosi standard, cautela su dosi sistemiche elevate"}},
+  {drug:"Adrenalina (nei LA)", brs:{s:"ok",n:"Nessun problema riportato con lidocaina"}, lqt:{s:"caution",n:"Effetto simpaticomimetico: dose minima efficace"}},
+  {drug:"Efedrina / Fenilefrina", brs:{s:"ok",n:"Usati senza complicanze riportate"}, lqt:{s:"caution",n:"Simpaticomimetici: usare con cautela e monitoraggio"}},
+  {drug:"Noradrenalina (infusione)", brs:{s:"avoid",n:"Riportato aumento del sopraslivellamento ST"}, lqt:{s:"caution",n:"Simpaticomimetico: da bilanciare con beta-blocco in atto"}},
+  {drug:"Isoproterenolo", brs:{s:"ok",n:"Farmaco di salvataggio per lo storm aritmico"}, lqt:{s:"caution",n:"Utile solo nelle forme bradicardia-dipendenti (LQT3) sotto supervisione"}},
+  {drug:"Beta-bloccanti", brs:{s:"avoid",n:"Evitare uso routinario perioperatorio"}, lqt:{s:"ok",n:"Proseguire sempre la terapia cronica"}},
+  {drug:"Clonidina / Dexmedetomidina", brs:{s:"avoid",n:"Alfa-agonisti: generalmente evitati"}, lqt:{s:"caution",n:"Dati limitati, la bradicardia indotta richiede cautela"}},
+  {drug:"Ondansetron (alte dosi)", brs:{s:"caution",n:"Dati limitati, non specificamente controindicato"}, lqt:{s:"avoid",n:"Prolungamento QT dose-dipendente: dose minima o alternativa"}},
+  {drug:"Droperidolo", brs:{s:"caution",n:"Da evitare per prudenza generale (classe III/QT)"}, lqt:{s:"avoid",n:"Boxed warning QT: evitare"}},
+  {drug:"Paracetamolo / FANS", brs:{s:"ok",n:"Nessuna controindicazione"}, lqt:{s:"ok",n:"Nessuna controindicazione"}},
+  {drug:"Magnesio solfato", brs:{s:"ok",n:"Nessuna controindicazione"}, lqt:{s:"ok",n:"Farmaco di prima linea per la torsione di punta"}},
+  {drug:"Antiaritmici classe IA/IC", brs:{s:"avoid",n:"Farmaci del test di provocazione: assolutamente da evitare"}, lqt:{s:"avoid",n:"Ulteriore prolungamento del QT: evitare"}}
+];
+
+const STATUS_LABEL = {ok:"Sicuro", caution:"Cautela", avoid:"Evitare"};
+const STATUS_CLASS = {ok:"ok", caution:"caution", avoid:"avoid"};
+
+function drugList(arr, cls){
+  return arr.map(d=>`
+    <div class="drug-card ${cls}">
+      <div class="drug-head" onclick="this.parentElement.classList.toggle('open')">
+        <div><div class="drug-name">${d.name}</div><div class="drug-tag">${d.tag}</div></div>
+        <div class="chev">&#9656;</div>
+      </div>
+      <div class="drug-body"><p class="note" style="margin-top:0;">${d.desc}</p></div>
+    </div>`).join("");
+}
+
+document.getElementById("brs-avoid-list").innerHTML = drugList(BRS_AVOID,"");
+document.getElementById("brs-safe-list").innerHTML = drugList(BRS_SAFE,"");
+document.getElementById("lqt-avoid-list").innerHTML = drugList(LQT_AVOID,"");
+document.getElementById("lqt-safe-list").innerHTML = drugList(LQT_SAFE,"");
+document.getElementById("cpvt-avoid-list").innerHTML = drugList(CPVT_AVOID,"");
+document.getElementById("cpvt-safe-list").innerHTML = drugList(CPVT_SAFE,"");
+document.getElementById("arvc-avoid-list").innerHTML = drugList(ARVC_AVOID,"");
+document.getElementById("arvc-safe-list").innerHTML = drugList(ARVC_SAFE,"");
+document.getElementById("por-avoid-list").innerHTML = drugList(POR_AVOID,"");
+document.getElementById("por-safe-list").innerHTML = drugList(POR_SAFE,"");
+document.getElementById("pch-drug-list").innerHTML = drugList(PCH_DRUGS,"");
+
+document.getElementById("compare-table-body").innerHTML = COMPARE.map(r=>`
+  <tr>
+    <td class="hi">${r.drug}</td>
+    <td><span class="pill ${STATUS_CLASS[r.brs.s]}">${STATUS_LABEL[r.brs.s]}</span><br><span class="note" style="margin-top:4px;">${r.brs.n}</span></td>
+    <td><span class="pill ${STATUS_CLASS[r.lqt.s]}">${STATUS_LABEL[r.lqt.s]}</span><br><span class="note" style="margin-top:4px;">${r.lqt.n}</span></td>
+  </tr>
+`).join("");
+
+document.getElementById("search-compare").addEventListener("input", function(){
+  const q = this.value.trim().toLowerCase();
+  document.querySelectorAll("#compare-table-body tr").forEach(tr=>{
+    tr.classList.toggle("hidden", q.length>0 && !tr.textContent.toLowerCase().includes(q));
+  });
+});
+
+
+
+
+
+
+const tabs = document.querySelectorAll("nav.tabs button");
+tabs.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    tabs.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll("section.view").forEach(v=>v.classList.remove("active"));
+    document.getElementById("view-"+btn.dataset.view).classList.add("active");
+    window.scrollTo({top:0,behavior:"instant"});
+  });
+});
+</script>
+</body>
+</html>
