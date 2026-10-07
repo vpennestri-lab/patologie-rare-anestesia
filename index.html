@@ -12,6 +12,7 @@
   --mh:#8a4b12; --mh-bg:#f5e8d8;
   --por:#5b3a7a; --por-bg:#ece5f3;
   --pch:#1f6b6b; --pch-bg:#e2f0ee;
+  --g6pd:#8a4b1f; --g6pd-bg:#f6ebe0;
   --mg:#2f5d8a; --mg-bg:#e4edf5;
   --ok:#2f6d3b; --ok-bg:#e7f0e6;
   --caution:#a3641c; --caution-bg:#f6ecdd;
@@ -78,6 +79,8 @@ td.hi{font-weight:600;}
 .callout.por .lbl{color:var(--por);}
 .callout.pch{background:var(--pch-bg);border:1px solid #b9dcd6;}
 .callout.pch .lbl{color:var(--pch);}
+.callout.g6pd{background:var(--g6pd-bg);border:1px solid #e6cfb0;}
+.callout.g6pd .lbl{color:var(--g6pd);}
 .callout.mg{background:var(--mg-bg);border:1px solid #bcd2e6;}
 .callout.mg .lbl{color:var(--mg);}
 .callout .lbl{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;font-weight:700;}
@@ -99,7 +102,7 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
   <div class="top-inner">
     <p class="eyebrow">Riferimento clinico &mdash; Anestesia &amp; Terapia Intensiva</p>
     <h1 class="title">Patologie Rare e Anestesia</h1>
-    <p class="subtitle">Gestione anestesiologica e farmacologica perioperatoria di canalopatie cardiache ereditarie e altre condizioni rare rilevanti per l'anestesista.</p>
+    <p class="subtitle">Gestione anestesiologica e farmacologica perioperatoria di canalopatie cardiache ereditarie e altre condizioni genetiche rilevanti per l'anestesista.</p>
     <nav class="tabs" id="tabs">
       <button data-view="home" class="active">Panoramica</button>
       <button data-view="brs">Brugada</button>
@@ -109,6 +112,7 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
       <button data-view="sqt">QT corto</button>
       <button data-view="por">Porfiria acuta</button>
       <button data-view="pch">Pseudocolinesterasi</button>
+      <button data-view="g6pd">Favismo (G6PD)</button>
       <button data-view="compare">Brugada vs QT lungo</button>
       <button data-view="refs">Bibliografia</button>
     </nav>
@@ -120,8 +124,8 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
 <!-- ============ HOME ============ -->
 <section class="view active" id="view-home">
   <div class="section-head">
-    <h2>Nove condizioni, nessuna linea guida prospettica</h2>
-    <p>Per tutte le condizioni raccolte in questa app, tranne l'ipertermia maligna, non esistono linee guida randomizzate: le indicazioni derivano da case series, revisioni sistematiche di case report e opinione di esperti. Consultare sempre la scheda specifica prima di generalizzare da una condizione all'altra: alcuni farmaci (es. beta-bloccanti, succinilcolina) hanno indicazioni opposte a seconda della sindrome.</p>
+    <h2>Otto condizioni, nessuna linea guida prospettica</h2>
+    <p>Per le condizioni raccolte in questa app non esistono linee guida basate su trial randomizzati: le indicazioni derivano da case series, revisioni sistematiche di case report e opinione di esperti. Consultare sempre la scheda specifica prima di generalizzare da una condizione all'altra: alcuni farmaci (es. beta-bloccanti, succinilcolina) hanno indicazioni opposte a seconda della sindrome.</p>
   </div>
 
   <div class="callout avoid">
@@ -141,6 +145,7 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
         <tr><td class="hi">QT corto</td><td>FA/FV (letteratura anestesiologica quasi assente)</td><td>Ipercalcemia, iperpotassiemia, farmaci che accorciano il QT</td><td>Proseguire chinidina se in terapia; defibrillatore disponibile</td></tr>
         <tr><td class="hi">Porfiria acuta</td><td>Crisi neuroviscerale acuta</td><td>Barbiturici, etomidate; molti anticonvulsivanti</td><td>Glucosio EV, evitare digiuno prolungato; eme-arginato se crisi</td></tr>
         <tr><td class="hi">Deficit di pseudocolinesterasi</td><td>Blocco neuromuscolare prolungato</td><td>Succinilcolina, mivacurium</td><td>Sedazione e ventilazione fino a recupero spontaneo</td></tr>
+        <tr><td class="hi">Deficit di G6PD (favismo)</td><td>Emolisi acuta da stress ossidativo; metemoglobinemia</td><td>Blu di metilene, prilocaina/benzocaina, rasburicase, diclofenac, metoclopramide, sulfamidici</td><td>Evitare ipotermia/acidosi/iperglicemia; analgesia adeguata; sorvegliare l'emolisi per 24&ndash;72 h</td></tr>
       </tbody>
     </table>
   </div>
@@ -304,6 +309,67 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
 </section>
 
 
+<!-- ============ G6PD ============ -->
+<section class="view" id="view-g6pd">
+  <div class="section-head">
+    <h2>Deficit di G6PD (favismo)</h2>
+    <p>Enzimopatia eritrocitaria X-linked, la pi&ugrave; comune al mondo (circa 400 milioni di persone; diffusa anche nel bacino del Mediterraneo). La carenza di G6PD riduce la produzione di NADPH e di glutatione ridotto: i globuli rossi non riescono a difendersi dallo stress ossidativo e vanno incontro a emolisi. Fattori scatenanti: farmaci ossidanti, infezioni, acidosi metabolica/chetoacidosi, ipotermia, fave, henna (lawsone) e lo stress della chirurgia stessa.</p>
+  </div>
+
+  <div class="callout g6pd">
+    <span class="lbl">Regola pratica</span>
+    Il problema anestesiologico principale &egrave; la <strong>scelta dei farmaci</strong>, sia per l'anestesia sia per l'analgesia postoperatoria. Non esiste una raccomandazione definita a favore dell'anestesia generale o loco-regionale. Evitare i farmaci ossidanti e quelli che inducono metemoglobinemia. <strong>Il blu di metilene non va usato</strong>: nel deficit di G6PD &egrave; inefficace e pu&ograve; causare emolisi grave.
+  </div>
+
+  <div class="callout avoid">
+    <span class="lbl">Attenzione ai protocolli di altre condizioni</span>
+    Il blu di metilene compare come terapia in diversi protocolli (metemoglobinemia, vasoplegia refrattaria): in un paziente con G6PD deficit va sostituito con le alternative indicate pi&ugrave; sotto. Lo stesso vale per prilocaina e benzocaina tra gli anestetici locali.
+  </div>
+
+  <div class="section-head" style="margin-top:6px;"><h2>Gravit&agrave;: classi OMS</h2></div>
+  <div class="tbl-wrap">
+    <table><tbody>
+      <tr><td class="hi">Classe I</td><td>Attivit&agrave; enzimatica &lt;10%</td><td>Anemia emolitica cronica non sferocitica</td></tr>
+      <tr><td class="hi">Classe II</td><td>Attivit&agrave; &lt;10%</td><td>Emolisi acuta intermittente (la variante &laquo;Mediterranea&raquo;, tipica dell'area italiana, rientra tipicamente in questa classe)</td></tr>
+      <tr><td class="hi">Classe III</td><td>Attivit&agrave; 10&ndash;60%</td><td>Emolisi acuta intermittente, in genere solo dopo esposizione a un trigger</td></tr>
+      <tr><td class="hi">Classi IV e V</td><td>Attivit&agrave; normale o aumentata</td><td>Nessun significato clinico</td></tr>
+    </tbody></table>
+  </div>
+  <div class="note">La gravit&agrave; dipende anche dal tipo di mutazione, dal sesso, dall'et&agrave; degli eritrociti, dal tipo e dalla dose del farmaco e dalla presenza di altri fattori di rischio (es. infezioni). Nei pazienti di etnia bianca l'emolisi tende a essere pi&ugrave; severa (fino all'insufficienza renale acuta) rispetto a quanto descritto nella popolazione nera, dove &egrave; pi&ugrave; spesso autolimitante.</div>
+
+  <div class="section-head"><h2>Preoperatorio</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Oltre alla valutazione standard (anamnesi, ittero neonatale, esame obiettivo, emocromo) possono essere utili <strong>aptoglobina, LDH, bilirubina totale e indiretta, reticolociti</strong>. Verificare la classe di deficit (dosaggio dell'attivit&agrave; enzimatica o analisi genetica). La chirurgia elettiva non va eseguita durante un episodio emolitico o in presenza di infezione. Nelle classi I e II predisporre emocomponenti crociati. Inserire in cartella (o sul documento del paziente) l'elenco dei farmaci controindicati, cos&igrave; che non vengano somministrati in reparto o in recovery. L'anestesia ambulatoriale non &egrave; raccomandata, perch&eacute; l'emolisi compare in genere dopo 24&ndash;72 ore: il paziente va informato sui segni di emolisi.</p></div>
+
+  <div class="section-head"><h2>Condotta intraoperatoria</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Priorit&agrave; di sala per ridurre lo stress preoperatorio; <strong>analgesia generosa</strong> (lo stress chirurgico pu&ograve; causare emolisi); controllo stretto della temperatura con riscaldamento attivo; controllo glicemico serrato; emogasanalisi per individuare acidosi e iperglicemia; osservare le urine per emoglobinuria. Anche l'ischemia-riperfusione (es. chirurgia con CEC) produce radicali ossidativi: in cardiochirurgia il decorso pu&ograve; essere pi&ugrave; complicato (ventilazione pi&ugrave; lunga, maggiore emolisi e fabbisogno trasfusionale).</p></div>
+  <div class="callout g6pd">
+    <span class="lbl">Sotto anestesia l'emolisi &egrave; mascherata</span>
+    I sintomi immediati (astenia, dolore lombare, cefalea, dispnea) non sono rilevabili nel paziente addormentato, e ipotensione o tachicardia possono essere attribuite ad altre cause. Ittero, urine scure, cianosi e insufficienza renale compaiono in genere dopo 24&ndash;72 ore dall'esposizione al trigger.
+  </div>
+
+  <div class="section-head"><h2>Farmaci da evitare</h2></div>
+  <div id="g6pd-avoid-list"></div>
+  <div class="section-head"><h2>Farmaci con dati discordanti</h2></div>
+  <div class="note" style="margin-bottom:10px;">La letteratura non offre un consenso globale basato sull'evidenza: la revisione sistematica di Youngster (2010) segnala che per alcuni farmaci storicamente ritenuti non sicuri l'evidenza complessiva non ne controindica l'uso.</div>
+  <div id="g6pd-contro-list"></div>
+  <div class="section-head"><h2>Farmaci considerati sicuri alle dosi terapeutiche</h2></div>
+  <div id="g6pd-safe-list"></div>
+  <div class="note">Gli elenchi non sono esaustivi. In caso di dubbio su un farmaco non riportato, verificare una fonte dedicata aggiornata o confrontarsi con l'ematologo.</div>
+
+  <div class="section-head"><h2>Paziente con stato G6PD sconosciuto in urgenza</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Una serie ostetrica descrive come tecnica ragionevole <strong>TCI di propofol, fentanil e rocuronio</strong>, evitando i farmaci della lista sopra finch&eacute; lo stato non &egrave; chiarito. Se possibile, chiedere in anamnesi di episodi di emolisi dopo fave o farmaci, e valutare l'etnia/provenienza geografica del paziente.</p></div>
+
+  <div class="section-head"><h2>Riconoscere e gestire l'emolisi</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;"><strong>Laboratorio</strong>: emoglobina e aptoglobina ridotte; LDH, bilirubina indiretta e reticolociti aumentati; test di Coombs negativo (non &egrave; un processo immune); allo striscio corpi di Heinz e schistociti. <strong>Trattamento</strong>: eliminare il fattore scatenante e controllare i sintomi; nella maggior parte dei casi non serve un trattamento specifico e l'emoglobina si recupera in 8&ndash;10 giorni. Le trasfusioni sono necessarie raramente, pi&ugrave; spesso nei bambini. Per prevenire il danno renale: supporto volemico, diuresi forzata e alcalinizzazione delle urine.</p></div>
+  <div class="callout g6pd">
+    <span class="lbl">Metemoglobinemia in un paziente G6PD</span>
+    Il blu di metilene non riduce la metemoglobina in questi pazienti (richiede il NADPH prodotto dalla via della G6PD) e pu&ograve; peggiorare l'emolisi. La terapia indicata da OrphanAnesthesia comprende <strong>trasfusioni, ossigenoterapia iperbarica e alcalinizzazione delle urine</strong>. L'acido ascorbico &egrave; citato come opzione in alcune fonti, ma l'evidenza &egrave; limitata ed &egrave; classificato tra i farmaci con dati discordanti.
+  </div>
+
+  <div class="section-head"><h2>Pediatria e ostetricia</h2></div>
+  <div class="card"><p class="note" style="margin-top:0;">Il gene &egrave; sul cromosoma X: il quadro &egrave; completo nei maschi emizigoti e nelle femmine omozigoti, mentre le femmine eterozigoti possono avere attivit&agrave; normale, ridotta o severamente carente a seconda dell'inattivazione dell'X (lyonizzazione). Nel neonato l'ittero da emolisi nella prima settimana pu&ograve; portare a kernittero. La rasburicase ha causato un decesso in un neonato pretermine. Per la gravidanza &egrave; stato ipotizzato un maggior rischio di preeclampsia.</p></div>
+</section>
+
 <!-- ============ COMPARE (Brugada vs QT lungo) ============ -->
 <section class="view" id="view-compare">
   <div class="section-head">
@@ -337,6 +403,13 @@ footer{max-width:980px;margin:36px auto 0 auto;padding:18px 20px 0 20px;border-t
       <tr><td><strong>Porfiria:</strong> Making safe medicine choices during general anaesthesia and surgery in acute porphyria. Welsh Medicines Information Centre. Aggiornato agosto 2024.</td></tr>
       <tr><td>Porphyrias. Br J Anaesth (review). James MF, Hift RJ.</td></tr>
       <tr><td><strong>Deficit di pseudocolinesterasi:</strong> nozioni consolidate di farmacologia anestesiologica e testi di riferimento (Miller's Anesthesia; Barash Clinical Anesthesia).</td></tr>
+      <tr><td><strong>Favismo (G6PD):</strong> F&ouml;dinger A, Luger TJ. OrphanAnesthesia &mdash; Anaesthesia recommendations for patients suffering from glucose-6-phosphate dehydrogenase deficiency (revisione tra pari: Erdoes G, Luzzatto L, Van Noorden CJF). orphananesthesia.eu, ultima modifica marzo 2015; versione pubblicata in Anaesth Intensivmed 2019 (n. 11), pp. 520 e segg.</td></tr>
+      <tr><td>Youngster I, et al. Medications and glucose-6-phosphate dehydrogenase deficiency: an evidence-based review. Drug Saf. 2010;33:713-726.</td></tr>
+      <tr><td>Elyassi AR, Rowshan HH. Perioperative management of the glucose-6-phosphate dehydrogenase deficient patient: a review of literature. Anesth Prog. 2009;56:86-91.</td></tr>
+      <tr><td>Cappellini MD, Fiorelli G. Glucose-6-phosphate dehydrogenase deficiency. Lancet. 2008;371:64-74.</td></tr>
+      <tr><td>WHO Working Group. Glucose-6-phosphate dehydrogenase deficiency. Bull World Health Organ. 1989;67:601-611.</td></tr>
+      <tr><td>Najafi N, Van de Velde A, Poelaert J. Potential risks of hemolysis after short-term administration of analgesics in children with glucose-6-phosphate dehydrogenase deficiency. J Pediatr. 2011;159:1023-1028.</td></tr>
+      <tr><td>Valiaveedan S, et al. Anaesthetic management in patients with glucose-6-phosphate dehydrogenase deficiency undergoing neurosurgical procedures. Indian J Anaesth. 2011;55:68-70.</td></tr>
     </tbody></table>
   </div>
 </section>
@@ -446,6 +519,42 @@ const PCH_DRUGS = [
 ];
 
 
+const G6PD_AVOID = [
+  {name:"Blu di metilene e blu di toluidina", tag:"antidoti della metemoglobinemia", desc:"Inefficaci nel deficit di G6PD (la riduzione richiede il NADPH prodotto dalla via della G6PD) e capaci di causare emolisi grave per il loro debole potere ossidante. Non usarli, neppure come rescue in vasoplegia o metemoglobinemia."},
+  {name:"Prilocaina e benzocaina", tag:"anestetici locali, anche topici (es. crema EMLA)", desc:"Inducono metemoglobinemia, che in questi pazienti non pu&ograve; essere trattata con il blu di metilene: evitare quando esistono alternative. La prilocaina compare anche tra i farmaci con dati discordanti."},
+  {name:"Rasburicase", tag:"uricolitico, uso oncoematologico", desc:"Emolisi severa e metemoglobinemia; descritto un decesso in un neonato pretermine dopo una singola dose. Controindicata."},
+  {name:"Diclofenac", tag:"FANS", desc:"Citato come non sicuro (a differenza di ibuprofene e parecoxib, considerati sicuri). L'aspirina ad alte dosi &egrave; anch'essa da evitare."},
+  {name:"Metoclopramide", tag:"antiemetico", desc:"Elencato tra i farmaci non sicuri: preferire un antiemetico alternativo per la profilassi della PONV."},
+  {name:"Diazepam", tag:"benzodiazepina", desc:"Elencato come non sicuro, a differenza del midazolam (dati discordanti, vedi sotto)."},
+  {name:"Lidocaina", tag:"anestetico locale amidico, dati discordanti", desc:"Citata come non sicura da OrphanAnesthesia; altre revisioni la considerano sicura alle dosi usuali. Dove possibile preferire la bupivacaina."},
+  {name:"Nitroprussiato di sodio", tag:"vasodilatatore", desc:"Elencato come non sicuro (compare anche tra i farmaci con dati discordanti)."},
+  {name:"Sulfamidici, nitrofurantoina, dapsone, gentamicina", tag:"antimicrobici", desc:"Sulfonamidi (incluso il cotrimossazolo), nitrofurantoina e dapsone sono tra i farmaci ossidanti classici. Per cotrimossazolo e chinoloni (acido nalidixico, ciprofloxacina) la revisione di Youngster ritiene che l'evidenza complessiva non ne controindichi l'uso. La gentamicina &egrave; elencata come non sicura, mentre l'amikacina &egrave; elencata come sicura."},
+  {name:"Primachina e altri 8-aminochinolinici", tag:"antimalarici", desc:"Causa classica di emolisi (la clorochina, invece, &egrave; considerata sicura)."},
+  {name:"Acetazolamide", tag:"diuretico, inibitore dell'anidrasi carbonica", desc:"Elencata tra le sostanze non sicure."},
+  {name:"Altre sostanze", tag:"naftalene, acetanilide, fenazopiridina, henna (lawsone), fave", desc:"Trigger noti di emolisi non strettamente anestesiologici: il naftalene (naftalina), la fenazopiridina, l'henna e l'ingestione di fave vanno evitati e il paziente informato."}
+];
+const G6PD_CONTRO = [
+  {name:"Paracetamolo", tag:"analgesico/antipiretico", desc:"OrphanAnesthesia lo cita sia tra i probabilmente sicuri a dosi terapeutiche sia tra i controversi: casi di emolisi sono descritti soprattutto dopo sovradosaggio o con infezione concomitante. La revisione di Youngster non ne controindica l'uso."},
+  {name:"Metamizolo", tag:"analgesico non oppioide", desc:"Storicamente considerato non sicuro, ma secondo la revisione di Youngster l'evidenza complessiva non ne controindica l'uso."},
+  {name:"Aspirina", tag:"bassa dose controversa; alta dose da evitare", desc:"Alle basse dosi i dati sono discordanti; alle dosi elevate &egrave; considerata non sicura."},
+  {name:"Midazolam", tag:"benzodiazepina", desc:"Usato senza problemi in diversi case report; un solo studio in vitro ha segnalato un'inibizione dell'attivit&agrave; G6PD."},
+  {name:"Sevoflurano e isoflurano", tag:"alogenati", desc:"Studi in vitro mostrano una certa inibizione dell'attivit&agrave; della G6PD, ma sono stati usati senza complicanze in numerosi pazienti. L'alotano e il protossido di azoto sono considerati sicuri."},
+  {name:"Fentanil, alfentanil, remifentanil", tag:"oppioidi", desc:"Il fentanil &egrave; ampiamente usato senza emolisi; un solo studio in vitro dubbio per fentanil e remifentanil. Il sufentanil &egrave; considerato sicuro."},
+  {name:"Tiopentale", tag:"barbiturico, induzione", desc:"Elencato come sicuro da OrphanAnesthesia, ma altre revisioni lo citano tra i farmaci potenzialmente emolitici: il propofol resta l'alternativa meglio documentata."},
+  {name:"Vitamina K, penicillina", tag:"altri farmaci perioperatori", desc:"Entrambe compaiono tra i controversi. La vitamina K &egrave; rilevante nell'inversione degli anticoagulanti."},
+  {name:"Acido ascorbico", tag:"vitamina C", desc:"Dati discordanti; citato come possibile opzione per la metemoglobinemia quando il blu di metilene &egrave; controindicato, con evidenza limitata."}
+];
+const G6PD_SAFE = [
+  {name:"Propofol", tag:"induzione e mantenimento", desc:"Ampiamente documentato come sicuro, incluse infusioni prolungate (TIVA/TCI)."},
+  {name:"Ketamina", tag:"induzione/analgesia", desc:"Non inibisce la G6PD: utilizzabile come anestetico endovenoso."},
+  {name:"Oppioidi", tag:"sufentanil, petidina, tramadolo", desc:"Considerati sicuri alle dosi terapeutiche."},
+  {name:"Ibuprofene e parecoxib", tag:"FANS", desc:"Considerati sicuri alle dosi terapeutiche: alternative al diclofenac per l'analgesia."},
+  {name:"Bupivacaina", tag:"anestetico locale", desc:"Documentata come sicura per anestesia subaracnoidea e blocchi periferici; spesso preferita come alternativa a lidocaina e prilocaina."},
+  {name:"Rocuronio, succinilcolina, neostigmina, glicopirrolato", tag:"curari e farmaci associati", desc:"Nessuna emolisi riportata."},
+  {name:"Eparina e clopidogrel", tag:"anticoagulante e antiaggregante", desc:"Somministrati in case report senza segni di emolisi."},
+  {name:"Mannitolo e amikacina", tag:"altri farmaci perioperatori", desc:"Elencati come sicuri."}
+];
+
 const COMPARE = [
   {drug:"Propofol (bolo induzione)", brs:{s:"ok",n:"Sicuro, uso comune"}, lqt:{s:"ok",n:"Farmaco preferito"}},
   {drug:"Propofol (infusione prolungata alte dosi)", brs:{s:"caution",n:"Cautela teorica, dati limitati"}, lqt:{s:"ok",n:"TIVA spesso preferita"}},
@@ -502,6 +611,9 @@ document.getElementById("arvc-safe-list").innerHTML = drugList(ARVC_SAFE,"");
 document.getElementById("por-avoid-list").innerHTML = drugList(POR_AVOID,"");
 document.getElementById("por-safe-list").innerHTML = drugList(POR_SAFE,"");
 document.getElementById("pch-drug-list").innerHTML = drugList(PCH_DRUGS,"");
+document.getElementById("g6pd-avoid-list").innerHTML = drugList(G6PD_AVOID,"");
+document.getElementById("g6pd-contro-list").innerHTML = drugList(G6PD_CONTRO,"");
+document.getElementById("g6pd-safe-list").innerHTML = drugList(G6PD_SAFE,"");
 
 document.getElementById("compare-table-body").innerHTML = COMPARE.map(r=>`
   <tr>
